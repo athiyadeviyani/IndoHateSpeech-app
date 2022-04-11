@@ -3,20 +3,22 @@
 <!--From https://codepen.io/frytyler/pen/EGdtg-->
 <head>
     <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>ML Deployment using Heroku</title>
-    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'> -->
 </head>
 
 <body>
-    <div class="prediction">
+    <div class="prediction" style="padding-left: 10%; padding-right:10%; padding-top:10%">
         <h1>IndoHateSpeech</h1>
-        <form action="{{ url_for('predict')}}"method="post">
-		<label for="text">Text</label>
-		<input type="text" size=100 id="text" name="text" required="required">
 		<br>
+        <form action="{{ url_for('predict')}}"method="post">
+		<label for="text">Text: </label>
+		<input type="text" size="50%" id="text" name="text" required="required"> &nbsp;
     		<!-- <label for="workclass">Working Class</label>
     		<select id="workclass" name="workclass" required="required">
       			<option value="1">Federal-gov</option>
@@ -157,19 +159,16 @@
       			<option value="41">Yugoslavia</option>
     		</select>
     		<br> -->
-        	<button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+        	<button type="submit" class="btn btn-primary btn-md">Predict</button>
         </form>
 
        <br>
-	   <b>{{input_text}}</b>
+	   <p>{{input_text}}</p>
 	   <br>
-       <b>{{ hs_pred }}</b>
-	   <br>
-	   <b>{{ cat_pred }}</b>
-	   <br>
-	   <b>{{ target_pred }}</b>
-	   <br>
-	   <b>{{ level_pred }}</b>
+       <p>{{ hs_pred }}</p>
+	   <p>{{ cat_pred }}</p>
+	   <p>{{ target_pred }}</p>
+	   <p>{{ level_pred }}</p>
 	   <br>
     </div>
 </body>
