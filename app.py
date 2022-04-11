@@ -35,9 +35,18 @@ def predict():
         str(prediction2[0]), str(prediction2[1]), 
         str(prediction3[0]), str(prediction3[1]), str(prediction3[2]), 
         str(prediction4[0]), str(prediction4[1]), str(prediction4[2]), str(prediction4[3]), str(prediction4[4]))
-    print(prediction_text)
+    # print(prediction_text)
 
-    return render_template('index.html', input_text='input text="{}" <br><br>'.format(final_features[0]), prediction_text=prediction_text)
+    cat_pred = 'CATEGORY:  Individual={} Group={}'.format(str(prediction1[0]), str(prediction1[1]))
+    hs_pred = 'HATE:     Hate_Speech={} Abusive={}'.format(str(prediction2[0]), str(prediction2[1]))
+    level_pred = 'LEVEL:    Weak={} Moderate={} Strong={}'.format(str(prediction3[0]), str(prediction3[1]), str(prediction3[2]))
+    target_pred = 'Religion={} Race={} Physical={} Gender={} Other={}'.format(str(prediction4[0]), str(prediction4[1]), str(prediction4[2]), str(prediction4[3]), str(prediction4[4]))
+
+    return render_template('index.html', input_text='input text="{}"'.format(final_features[0]), 
+    cat_pred=cat_pred,
+    hs_pred=hs_pred,
+    level_pred=level_pred,
+    target_pred=target_pred)
 
 
 if __name__ == "__main__":
