@@ -20,7 +20,7 @@ def predict():
     # feature_list = list(feature_list.values())
     # feature_list = list(map(int, feature_list))
     # final_features = np.array(feature_list).reshape(1, 12) 
-    final_features = feature_list.values()[0]
+    final_features = list(feature_list.values())[0]
     
     prediction1 = model1.predict(final_features)
     prediction2 = model2.predict(final_features)
