@@ -12,7 +12,7 @@
 
 <body>
     <div class="prediction">
-        <h1>Hate speech prediction</h1>
+        <h1>IndoHateSpeech</h1>
         <form action="{{ url_for('predict')}}"method="post">
 		<label for="text">Text</label>
 		<input type="text" id="text" name="text" required="required">
@@ -161,6 +161,7 @@
         </form>
 
        <br>
+	   <b>{{input_text}}</b>
        <b>{{ prediction_text }}</b>
     </div>
 </body>

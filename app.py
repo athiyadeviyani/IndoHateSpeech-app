@@ -22,17 +22,22 @@ def predict():
     # final_features = np.array(feature_list).reshape(1, 12) 
     final_features = [list(feature_list.values())[0]]
     
-    prediction1 = model1.predict(final_features)
-    prediction2 = model2.predict(final_features)
-    prediction3 = model3.predict(final_features)
-    prediction4 = model4.predict(final_features)
-    # output = int(prediction[0])
-    # if output == 1:
-    #     text = ">50K"
-    # else:
-    #     text = "<=50K"
+    prediction1 = model1.predict_proba(final_features)[0]
+    prediction2 = model2.predict_proba(final_features)[0]
+    prediction3 = model3.predict_proba(final_features)[0]
+    prediction4 = model4.predict_proba(final_features)[0]
 
-    return render_template('index.html', prediction_text='cat={} hs={} level={} target={}'.format(str(prediction1), str(prediction2), str(prediction3), str(prediction4)))
+    prediction_text=' CATEGORY:  Individual={} Group={} \n \
+    HATE:     Hate_Speech={} Abusive={} \n \
+    LEVEL:    Weak={} Moderate={} Strong={} \n \
+    TARGET:   Religion={} Race={} Physical={} Gender={} Other={}'.format(
+        str(prediction1[0]), str(prediction1[1]), 
+        str(prediction2[0]), str(prediction2[1]), 
+        str(prediction3[0]), str(prediction3[1]), str(prediction3[2]), 
+        str(prediction4[0]), str(prediction4[1]), str(prediction4[2]), str(prediction4[3]), str(prediction4[4]))
+    print(prediction_text)
+
+    return render_template('index.html', input_text='{}'.format(final_features[0]), prediction_text=prediction_text)
 
 
 if __name__ == "__main__":
