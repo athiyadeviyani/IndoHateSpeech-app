@@ -27,17 +27,17 @@ def predict():
     prediction3 = model3.predict_proba(final_features)[0]
     prediction4 = model4.predict_proba(final_features)[0]
 
-    prediction_text=' CATEGORY:  Individual={} Group={} \n \
-    HATE:     Hate_Speech={} Abusive={} \n \
-    LEVEL:    Weak={} Moderate={} Strong={} \n \
-    TARGET:   Religion={} Race={} Physical={} Gender={} Other={}'.format(
+    prediction_text=' CATEGORY:  Individual={} Group={} <br> \
+    HATE:     Hate_Speech={} Abusive={} <br> \
+    LEVEL:    Weak={} Moderate={} Strong={} <br> \
+    TARGET:   Religion={} Race={} Physical={} Gender={} Other={} <br>'.format(
         str(prediction1[0]), str(prediction1[1]), 
         str(prediction2[0]), str(prediction2[1]), 
         str(prediction3[0]), str(prediction3[1]), str(prediction3[2]), 
         str(prediction4[0]), str(prediction4[1]), str(prediction4[2]), str(prediction4[3]), str(prediction4[4]))
     print(prediction_text)
 
-    return render_template('index.html', input_text='{}'.format(final_features[0]), prediction_text=prediction_text)
+    return render_template('index.html', input_text='input text="{}" <br><br>'.format(final_features[0]), prediction_text=prediction_text)
 
 
 if __name__ == "__main__":
