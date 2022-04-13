@@ -31,7 +31,7 @@ st.write("""
 """)
 
 
-text = st.text_input("For a quick demo, type an example sentence and press ENTER or RETURN:", value='', placeholder="Lu jelek banget sih!")
+text = st.text_input("For a quick demo, type an example sentence and press ENTER or RETURN:", value='')
 
 if text != '':
     st.write('Input: ', text)
@@ -101,7 +101,7 @@ if uploaded_file is not None:
     """)
     st.write(df.head())
 
-col = st.text_input("Please enter the column name containing your text and press ENTER or RETURN:", value='', placeholder='text')
+col = st.text_input("Please enter the column name containing your text and press ENTER or RETURN:", value='')
 if col != '':
     st.write('Column name: ', col)
 
