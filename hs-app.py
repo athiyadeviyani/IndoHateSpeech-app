@@ -16,61 +16,61 @@ def load_models():
     return cat_model, hs_model, level_model, target_model
 
 
-# def get_demo(cat_model, hs_model, level_model, target_model):
-        # st.write("""
+def get_demo(cat_model, hs_model, level_model, target_model):
+    st.write("""
 
-        # ## Demo
-        # """)
-#     text = st.text_input("For a quick demo, type an example sentence and press ENTER or RETURN:", value='')
+    ## Demo
+    """)
+    text = st.text_input("For a quick demo, type an example sentence and press ENTER or RETURN:", value='')
 
-#     if text != '':
-#         st.write('Input: ', text)
-#         text = [text]
-#         prediction1 = cat_model.predict_proba(text)[0]
-#         prediction2 = hs_model.predict_proba(text)[0]
-#         prediction3 = level_model.predict_proba(text)[0]
-#         prediction4 = target_model.predict_proba(text)[0]
+    if text != '':
+        st.write('Input: ', text)
+        text = [text]
+        prediction1 = cat_model.predict_proba(text)[0]
+        prediction2 = hs_model.predict_proba(text)[0]
+        prediction3 = level_model.predict_proba(text)[0]
+        prediction4 = target_model.predict_proba(text)[0]
 
-#         individual_score = round(prediction1[0],2) * 100
-#         group_score = round(prediction1[1],2) * 100
+        individual_score = round(prediction1[0],2) * 100
+        group_score = round(prediction1[1],2) * 100
 
-#         hs_score = prediction2[0] * 100
-#         abusive_score = round(prediction2[1],2) * 100
+        hs_score = prediction2[0] * 100
+        abusive_score = round(prediction2[1],2) * 100
 
-#         weak_score = round(prediction3[0],2) * 100
-#         moderate_score = round(prediction3[1],2) * 100
-#         strong_score = round(prediction3[2],2) * 100
+        weak_score = round(prediction3[0],2) * 100
+        moderate_score = round(prediction3[1],2) * 100
+        strong_score = round(prediction3[2],2) * 100
 
-#         religion_score = round(prediction4[0],2) * 100
-#         race_score = round(prediction4[1],2) * 100
-#         physical_score = round(prediction4[2],2) * 100
-#         gender_score = round(prediction4[3],2) * 100
-#         other_score = round(prediction4[4],2) * 100
+        religion_score = round(prediction4[0],2) * 100
+        race_score = round(prediction4[1],2) * 100
+        physical_score = round(prediction4[2],2) * 100
+        gender_score = round(prediction4[3],2) * 100
+        other_score = round(prediction4[4],2) * 100
 
-#         st.write("""
-#         ### Results
+        st.write("""
+        ### Results
 
-#         **Category**
-#         - Individual: {}%
-#         - Group: {}%
+        **Category**
+        - Individual: {}%
+        - Group: {}%
 
-#         **Hatefulness and Abusiveness**
-#         - Hatefulness: {}%
-#         - Abusiveness: {}%
+        **Hatefulness and Abusiveness**
+        - Hatefulness: {}%
+        - Abusiveness: {}%
 
-#         **Level**
-#         - Weak: {}%
-#         - Moderate: {}%
-#         - Strong: {}%
+        **Level**
+        - Weak: {}%
+        - Moderate: {}%
+        - Strong: {}%
 
-#         **Target**
-#         - Religion: {}%
-#         - Race: {}%
-#         - Physical: {}%
-#         - Gender: {}%
-#         - Other: {}%
-#         """.format(individual_score, group_score, hs_score, abusive_score, weak_score, moderate_score, strong_score,
-#                         religion_score, race_score, physical_score, gender_score, other_score))
+        **Target**
+        - Religion: {}%
+        - Race: {}%
+        - Physical: {}%
+        - Gender: {}%
+        - Other: {}%
+        """.format(individual_score, group_score, hs_score, abusive_score, weak_score, moderate_score, strong_score,
+                        religion_score, race_score, physical_score, gender_score, other_score))
 
 
 def audit_dataset(cat_model, hs_model, level_model, target_model):
@@ -84,8 +84,14 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
     """)
 
     st.write('Please upload your CSV file below:')
-
-    
+    uploaded_file = st.file_uploader("If your CSV file exceeds 200MB, please consider splitting your dataset into chunks!", type=["csv"])
+    df = None
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        st.write("""
+        #### Dataset preview
+        """)
+        st.write(df.head())
 
     col = st.text_input("Please enter the column name containing your text and press ENTER or RETURN:", value='')
     if col != '':
@@ -97,16 +103,7 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
     category = st.checkbox('Category')
     level = st.checkbox('Level')
 
-    uploaded_file = st.file_uploader("If your CSV file exceeds 200MB, please consider splitting your dataset into chunks!", type=["csv"])
-    if uploaded_file is not None:
-        # df = None
-        # if uploaded_file is not None:
-        #     df = pd.read_csv(uploaded_file)
-        #     st.write("""
-        #     #### Dataset preview
-        #     """)
-        #     st.write(df.head())
-        df = pd.read_csv(uploaded_file)
+    if st.button("Audit"):
         text_column = df[col]
         X = []
 
@@ -143,16 +140,14 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
         st.write(df.head())
 
 
-        csv = df.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-        href = f'<a href="data:file/csv;base64,{b64}" download=audited_dataset.csv>Download as CSV</a>'
+        # csv = df.to_csv(index=False)
+        # b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+        # href = f'<a href="data:file/csv;base64,{b64}" download=audited_dataset.csv>Download as CSV</a>'
 
-        st.markdown(href, unsafe_allow_html=True)
+        # st.markdown(href, unsafe_allow_html=True)
 
-        # df_csv = df.to_csv()
-        # st.download_button("Download as CSV", df_csv, "audited_dataset.csv")
-
-
+        df_csv = df.to_csv()
+        st.download_button("Download as CSV", df_csv, "audited_dataset.csv")
 
 if __name__ == "__main__":
 
@@ -170,5 +165,5 @@ if __name__ == "__main__":
     The model employs a Recurrent-CNN architecture trained on the [Multilabel Hate Speech and Abusive Language Detection Dataset](https://github.com/okkyibrohim/id-multi-label-hate-speech-and-abusive-language-detection) with an average accuracy of 78.50 and an F1-score of 0.7035.
     """)
 
-    # get_demo(cat_model, hs_model, level_model, target_model)
+    get_demo(cat_model, hs_model, level_model, target_model)
     audit_dataset(cat_model, hs_model, level_model, target_model)
