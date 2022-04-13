@@ -16,57 +16,61 @@ def load_models():
     return cat_model, hs_model, level_model, target_model
 
 
-def get_demo(cat_model, hs_model, level_model, target_model):
-    text = st.text_input("For a quick demo, type an example sentence and press ENTER or RETURN:", value='')
+# def get_demo(cat_model, hs_model, level_model, target_model):
+        # st.write("""
 
-    if text != '':
-        st.write('Input: ', text)
-        text = [text]
-        prediction1 = cat_model.predict_proba(text)[0]
-        prediction2 = hs_model.predict_proba(text)[0]
-        prediction3 = level_model.predict_proba(text)[0]
-        prediction4 = target_model.predict_proba(text)[0]
+        # ## Demo
+        # """)
+#     text = st.text_input("For a quick demo, type an example sentence and press ENTER or RETURN:", value='')
 
-        individual_score = round(prediction1[0],2) * 100
-        group_score = round(prediction1[1],2) * 100
+#     if text != '':
+#         st.write('Input: ', text)
+#         text = [text]
+#         prediction1 = cat_model.predict_proba(text)[0]
+#         prediction2 = hs_model.predict_proba(text)[0]
+#         prediction3 = level_model.predict_proba(text)[0]
+#         prediction4 = target_model.predict_proba(text)[0]
 
-        hs_score = prediction2[0] * 100
-        abusive_score = round(prediction2[1],2) * 100
+#         individual_score = round(prediction1[0],2) * 100
+#         group_score = round(prediction1[1],2) * 100
 
-        weak_score = round(prediction3[0],2) * 100
-        moderate_score = round(prediction3[1],2) * 100
-        strong_score = round(prediction3[2],2) * 100
+#         hs_score = prediction2[0] * 100
+#         abusive_score = round(prediction2[1],2) * 100
 
-        religion_score = round(prediction4[0],2) * 100
-        race_score = round(prediction4[1],2) * 100
-        physical_score = round(prediction4[2],2) * 100
-        gender_score = round(prediction4[3],2) * 100
-        other_score = round(prediction4[4],2) * 100
+#         weak_score = round(prediction3[0],2) * 100
+#         moderate_score = round(prediction3[1],2) * 100
+#         strong_score = round(prediction3[2],2) * 100
 
-        st.write("""
-        ### Results
+#         religion_score = round(prediction4[0],2) * 100
+#         race_score = round(prediction4[1],2) * 100
+#         physical_score = round(prediction4[2],2) * 100
+#         gender_score = round(prediction4[3],2) * 100
+#         other_score = round(prediction4[4],2) * 100
 
-        **Category**
-        - Individual: {}%
-        - Group: {}%
+#         st.write("""
+#         ### Results
 
-        **Hatefulness and Abusiveness**
-        - Hatefulness: {}%
-        - Abusiveness: {}%
+#         **Category**
+#         - Individual: {}%
+#         - Group: {}%
 
-        **Level**
-        - Weak: {}%
-        - Moderate: {}%
-        - Strong: {}%
+#         **Hatefulness and Abusiveness**
+#         - Hatefulness: {}%
+#         - Abusiveness: {}%
 
-        **Target**
-        - Religion: {}%
-        - Race: {}%
-        - Physical: {}%
-        - Gender: {}%
-        - Other: {}%
-        """.format(individual_score, group_score, hs_score, abusive_score, weak_score, moderate_score, strong_score,
-                        religion_score, race_score, physical_score, gender_score, other_score))
+#         **Level**
+#         - Weak: {}%
+#         - Moderate: {}%
+#         - Strong: {}%
+
+#         **Target**
+#         - Religion: {}%
+#         - Race: {}%
+#         - Physical: {}%
+#         - Gender: {}%
+#         - Other: {}%
+#         """.format(individual_score, group_score, hs_score, abusive_score, weak_score, moderate_score, strong_score,
+#                         religion_score, race_score, physical_score, gender_score, other_score))
 
 
 def audit_dataset(cat_model, hs_model, level_model, target_model):
@@ -164,11 +168,5 @@ if __name__ == "__main__":
     The model employs a Recurrent-CNN architecture trained on the [Multilabel Hate Speech and Abusive Language Detection Dataset](https://github.com/okkyibrohim/id-multi-label-hate-speech-and-abusive-language-detection) with an average accuracy of 78.50 and an F1-score of 0.7035.
     """)
 
-
-    st.write("""
-
-    ## Demo
-    """)
-
-    get_demo(cat_model, hs_model, level_model, target_model)
+    # get_demo(cat_model, hs_model, level_model, target_model)
     audit_dataset(cat_model, hs_model, level_model, target_model)
