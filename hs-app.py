@@ -81,6 +81,7 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
     ## Dataset audit
 
     Please upload a CSV file containing a single column of text. After uploading, you will be able to download an audited version of your dataset with the selected labels.
+    **We will not be storing your dataset at all!** All the preprocessing and inference are done on-the-fly.
     """)
 
     st.write('Please upload your CSV file below:')
