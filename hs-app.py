@@ -96,6 +96,7 @@ Please upload a CSV file containing a single column of text. After uploading, yo
 st.write('Please upload your CSV file below:')
 
 uploaded_file = st.file_uploader("If your CSV file exceeds 200MB, please consider splitting your dataset into chunks!", type=["csv"])
+df = None
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.write("""
