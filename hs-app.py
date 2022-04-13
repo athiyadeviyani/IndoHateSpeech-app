@@ -6,6 +6,8 @@ import pickle
 
 PREDICT = False 
 
+st.beta_set_page_config(page_title='IndoHateSpeech')
+
 # LOAD MODELS
 cat_model = pickle.load(open('rf_cat.sav', 'rb'))
 hs_model = pickle.load(open('rf_hs.sav', 'rb'))
