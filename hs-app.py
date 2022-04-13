@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from preprocess import preprocess
 import pickle
-
+import base64
 # st.beta_set_page_config(page_title='IndoHateSpeech')
 
 
@@ -135,8 +135,16 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
         ### Audited dataset preview
         """)
         st.write(df.head())
-        df_csv = df.to_csv()
-        st.download_button("Download as CSV", df_csv, "audited_dataset.csv")
+
+
+        csv = df.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+        href = f'<a href="data:file/csv;base64,{b64}" download=audited_dataset.csv>Download as CSV</a>'
+
+        st.markdown(href, unsafe_allow_html=True)
+
+        # df_csv = df.to_csv()
+        # st.download_button("Download as CSV", df_csv, "audited_dataset.csv")
 
 
 
