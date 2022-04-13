@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ML Deployment using Heroku</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'> -->
+</head>
+
+<body>
+    <div class="prediction" style="padding-left: 10%; padding-right:10%; padding-top:10%">
+        <h1>IndoHateSpeech</h1>
+		<br>
+        <form action="{{ url_for('predict')}}"method="post">
+		<label for="text">Text: </label>
+		<input type="text" size="50%" id="text" name="text" required="required"> &nbsp;
+    		<!-- <label for="workclass">Working Class</label>
+    		<select id="workclass" name="workclass" required="required">
+      			<option value="1">Federal-gov</option>
+      			<option value="2">Local-gov</option>
+      			<option value="3">Never-worked</option>
+      			<option value="4">Private</option>
+      			<option value="5">Self-emp-inc</option>
+      			<option value="6">Self-emp-not-inc</option>
+      			<option value="7">State-gov</option>
+      			<option value="8">Without-pay</option>
+    		</select>
+    		<br> -->
+		<!-- <label for="education">Education</label>
+    		<select id="education" name="education" required="required">
+      			<option value="0">10th</option>
+      			<option value="1">11th</option>
+		      	<option value="2">12th</option>
+		      	<option value="3">1st-4th</option>
+				<option value="4">5th-6th</option>
+      			<option value="5">7th-8th</option>
+      			<option value="6">9th</option>
+      			<option value="7">Assoc-acdm</option>
+      			<option value="8">Assoc-voc</option>
+      			<option value="9">Bachelors</option>
+      			<option value="10">Doctorate</option>
+      			<option value="11">HS-grad</option>
+      			<option value="12">Masters</option>
+      			<option value="13">Preschool</option>
+      			<option value="14">Prof-school</option>
+      			<option value="15">Some-college</option>
+    		</select>
+    		<br>
+    		<label for="marital-status">Marital Status</label>
+    		<select id="marital-status" name="marital-status" required="required">
+      			<option value="0">Divorced</option>
+      			<option value="1">Married-AF-spouse</option>
+      			<option value="2">Married-civ-spouse</option>
+				<option value="3">Married-spouse-absent</option>
+				<option value="4">Never-married'</option>
+				<option value="5">Separated</option>
+				<option value="6">Widowed</option>
+    		</select>
+    		<br>
+		<label for="occupation">Occupation</label>
+    		<select id="occupation" name="occupation" required="required">
+      			<option value="1">Adm-clerical</option>
+      			<option value="2">Armed-Forces</option>
+      			<option value="3">Craft-repair</option>
+      			<option value="4">Exec-managerial</option>
+      			<option value="5">Farming-fishing</option>
+      			<option value="6">Handlers-cleaners</option>
+      			<option value="7">Machine-op-inspct</option>
+      			<option value="8">Other-service</option>
+      			<option value="9">Priv-house-serv</option>
+      			<option value="10">Prof-specialty</option>
+      			<option value="11">Protective-serv</option>
+      			<option value="12">Sales</option>
+      			<option value="13">Tech-support</option>
+      			<option value="14">Transport-moving</option>
+    		</select>
+    		<br>
+    		<label for="relationship">Relationship</label>
+    		<select id="relationship" name="relationship" required="required">
+      			<option value="0">Husband</option>
+      			<option value="1">Not-in-family</option>
+      			<option value="2">Other-relative</option>
+      			<option value="3">Own-child</option>
+      			<option value="4">Unmarried</option>
+      			<option value="5">Wife</option>
+    		</select>
+    		<br>
+    		<label for="race">Race</label>
+    		<select id="race" name="race" required="required">
+      			<option value="0">Amer Indian Eskimo</option>
+      			<option value="1">Asian Pac Islander</option>
+      			<option value="2">Black</option>
+      			<option value="3">Other</option>
+      			<option value="4">White</option>
+    		</select>
+    		<br>
+    		<label for="gender">Gender</label>
+    		<select id="gender" name="gender" required="required">
+      			<option value="0">Female</option>
+      			<option value="1">Male</option>
+    		</select>
+    		<br>
+    		<label for="capital-gain">Capital Gain </label>
+    		<input type="text" id="capital-gain" name="capital-gain" required="required">btw:[0-99999]
+    		<br>
+    		<label for="capital-loss">Capital Loss </label>
+    		<input type="text" id="capital-loss" name="capital-loss" required="required">btw:[0-4356]
+    		<br>
+    		<label for="hours-per-week">Hours per Week </label>
+    		<input type="text" id="hours-per-week" name="hours-per-week" required="required">btw:[1-99]
+    		<br>
+    		<label for="native-country">Native Country</label>
+    		<select id="native-country" name="native-country" required="required">
+      			<option value="1">Cambodia</option>
+      			<option value="2">Canada</option>
+      			<option value="3">China</option>
+      			<option value="4">Columbia</option>
+      			<option value="5">Cuba</option>
+      			<option value="6">Dominican Republic</option>
+      			<option value="7">Ecuador</option>
+      			<option value="8">El Salvadorr</option>
+      			<option value="9">England</option>
+      			<option value="10">France</option>
+      			<option value="11">Germany</option>
+      			<option value="12">Greece</option>
+      			<option value="13">Guatemala</option>
+      			<option value="14">Haiti</option>
+      			<option value="15">Netherlands</option>
+      			<option value="16">Honduras</option>
+      			<option value="17">HongKong</option>
+      			<option value="18">Hungary</option>
+      			<option value="19">India</option>
+      			<option value="20">Iran</option>
+      			<option value="21">Ireland</option>
+      			<option value="22">Italy</option>
+      			<option value="23">Jamaica</option>
+      			<option value="24">Japan</option>
+      			<option value="25">Laos</option>
+      			<option value="26">Mexico</option>
+      			<option value="27">Nicaragua</option>
+      			<option value="28">Outlying-US(Guam-USVI-etc)</option>
+      			<option value="29">Peru</option>
+      			<option value="30">Philippines</option>
+      			<option value="31">Poland</option>
+      			<option value="32">Portugal</option>
+      			<option value="33">Puerto-Rico</option>
+      			<option value="34">Scotland</option>
+      			<option value="35">South</option>
+      			<option value="36">Taiwan</option>
+      			<option value="37">Thailand</option>
+      			<option value="38">Trinadad&Tobago</option>
+      			<option value="39">United States</option>
+      			<option value="40">Vietnam</option>
+      			<option value="41">Yugoslavia</option>
+    		</select>
+    		<br> -->
+        	<button type="submit" class="btn btn-primary btn-md">Predict</button>
+        </form>
+
+       <br>
+	   <p>{{input_text}}</p>
+	   <br>
+       <p>{{ hs_pred }}</p>
+	   <p>{{ cat_pred }}</p>
+	   <p>{{ target_pred }}</p>
+	   <p>{{ level_pred }}</p>
+	   <br>
+    </div>
+</body>
+</html>
