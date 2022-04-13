@@ -86,13 +86,13 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
     st.write('Please upload your CSV file below:')
 
     uploaded_file = st.file_uploader("If your CSV file exceeds 200MB, please consider splitting your dataset into chunks!", type=["csv"])
-    df = None
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.write("""
-        #### Dataset preview
-        """)
-        st.write(df.head())
+    # df = None
+    # if uploaded_file is not None:
+    #     df = pd.read_csv(uploaded_file)
+    #     st.write("""
+    #     #### Dataset preview
+    #     """)
+    #     st.write(df.head())
 
     col = st.text_input("Please enter the column name containing your text and press ENTER or RETURN:", value='')
     if col != '':
@@ -104,7 +104,9 @@ def audit_dataset(cat_model, hs_model, level_model, target_model):
     category = st.checkbox('Category')
     level = st.checkbox('Level')
 
-    if st.button("Audit!"):
+    uploaded_file = st.file_uploader("If your CSV file exceeds 200MB, please consider splitting your dataset into chunks!", type=["csv"])
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
         text_column = df[col]
         X = []
 
