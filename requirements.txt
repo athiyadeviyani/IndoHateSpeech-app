@@ -2,3 +2,6 @@ streamlit==0.88.0
 pandas==0.25.3
 numpy==1.18.1
 scikit-learn==0.22.1
+torch==1.4.0
+transformers==4.11.3s
+tensorflow==2.8.0

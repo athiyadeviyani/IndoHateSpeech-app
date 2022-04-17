@@ -58,6 +58,8 @@ def remove_early_space(text):
         return text
 
 def preprocess(text):
+    if not isinstance(text, str):
+        return ''
     text = remove_unnecessary_char(text) # 2
     text = normalize_alay(text) # 3
     text = remove_unnecessary_char(text)
